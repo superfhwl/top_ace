@@ -44,9 +44,11 @@ Screen = {
 			m_context.drawImage(img, sx, sy, swidth, sheight, x, y, width, height);
 		}
 		
+		/*
 		screen.drawImage = function (img, x, y) {
 			m_context.drawImage(img, x, y);
 		}
+		*/
 		
 		// return the "this" object, so we have all these members & methonds defined above now.
 		return screen;     

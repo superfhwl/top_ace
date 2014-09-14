@@ -35,7 +35,7 @@ Game = {
 		m_actors.push(data.loadActor("net"));
 		m_actors.push(data.loadActor("poop"));
 		m_actors.push(data.loadActor("powerbar"));
-		m_actors.push(data.laodActor("powercursor"))
+		m_actors.push(data.loadActor("powercursor"));
 		
 		
 		/******************** graphic process ********************/
@@ -47,8 +47,16 @@ Game = {
 		
 		// do drawing tasks.
 		game.drawBackground = function () {
-			m_screen.drawImage(m_background, 0, 0 , 480, 640, 0, 0, 480, 640);
-			//m_screen.drawImage(m_background, 0, 0);
+			// There is some issue while drawing big image using this canvas API, use small pieces to draw.
+			m_screen.drawImage(m_background, 0, 0, 200, 200, 0, 0, 200, 200);
+			m_screen.drawImage(m_background, 200, 0, 200, 200, 200, 0, 200, 200);
+			m_screen.drawImage(m_background, 400, 0, 80, 200, 400, 0, 80, 200);
+			m_screen.drawImage(m_background, 0, 200, 200, 200, 0, 200, 200, 200);
+			m_screen.drawImage(m_background, 200, 200, 200, 200, 200, 200, 200, 200);
+			m_screen.drawImage(m_background, 400, 200, 80, 200, 400, 200, 80, 200);
+			m_screen.drawImage(m_background, 0, 400, 200, 200, 0, 400, 200, 200);
+			m_screen.drawImage(m_background, 200, 400, 200, 200, 200, 400, 200, 200);
+			m_screen.drawImage(m_background, 400, 400, 80, 200, 400, 400, 80, 200);									
 		}
 		
 		game.drawActors = function () {
