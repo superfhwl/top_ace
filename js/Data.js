@@ -30,32 +30,52 @@ Data = {
 			return "images/480_720/court.png";
 		}
 		
-		// Load an actor resource using the actor name.
-		data.loadActor = function (actorName) {
-			switch (actorName) {
-			case "player":
-				return loadPlayer();
+		
+		// Sprite's resorce form in an array, edit this form to match the image size, or add a new row for new spirte.
+		var sprites = new Array();
+
+		var spriteData0 = {name: "player", 			imgPath: "images/480_720/player.png", 			frames: {count: 1, width: 55, height: 65}, 		pos: {x: 300, y: 300}};
+		sprites.push(spriteData0);
+		var spriteData1 = {name: "net", 			imgPath: "images/480_720/net.png", 				frames: {count: 1, width: 380, height: 43}, 	pos: {x: 60, y: 162}};
+		sprites.push(spriteData1);
+		var spriteData2 = {name: "poop", 			imgPath: "images/480_720/poop.png", 			frames: {count: 1, width: 30, height: 25}, 		pos: {x: 130, y: 122}};
+		sprites.push(spriteData2);
+		var spriteData3 = {name: "powerbar", 		imgPath: "images/480_720/powerbar.png", 		frames: {count: 1, width: 17, height: 280}, 	pos: {x: 430, y: 100}};
+		sprites.push(spriteData3);
+		var spriteData4 = {name: "powercursor", 	imgPath: "images/480_720/powercursor.png", 		frames: {count: 1, width: 30, height: 30}, 		pos: {x: 420, y: 300}};
+		sprites.push(spriteData4);
+
+		function loadSprite (spriteName) {
+			for (i in sprites) {
+				if (spriteName == sprites[i].name) {
+					// create a new & empty object.
+					sprite = Sprite.createNew();
+							
+					sprite.loadImage(sprites[i].imgPath);
+					sprite.loadFrames(sprites[i].frames.count, sprites[i].frames.width, sprites[i].frames.height);
+					sprite.setPos(sprites[i].pos.x, sprites[i].pos.y);
+			
+					return sprite;
+				}
 			}
 		}
-		
-		// define resource for player.
-		function loadPlayer () {
-			sprite = Sprite.createNew();		// create a new & empty object.
-			sprite.loadImage("images/480_720/player.png")
-			sprite.loadFrames(1, 50, 59);
-			sprite.setPos(300, 300);
+
+		// Actor's resource can't contain AI logic, it will be discribe in actor.js.
+		data.loadActor = function (actorName) {
+			// create a new actor object.
+			actor = Actor.createNew();    		
 			
-			actor = Actor.createNew();    		// create a new actor object.
-			actor.setSprite(sprite);
+			// load sprite data.
+			actor.setSprite(loadSprite(actorName));
+			actor.name = actorName;
 			
 			return actor;
 		}
-		
+
 		
 		// return the "this" object, so we have all these members & methonds defined above now.
 		return data;     
 	}
 }
-
 
 

@@ -32,6 +32,10 @@ Game = {
 		// actors is defined in data.js
 		var m_actors = new Array();
 		m_actors.push(data.loadActor("player"));
+		m_actors.push(data.loadActor("net"));
+		m_actors.push(data.loadActor("poop"));
+		m_actors.push(data.loadActor("powerbar"));
+		m_actors.push(data.laodActor("powercursor"))
 		
 		
 		/******************** graphic process ********************/

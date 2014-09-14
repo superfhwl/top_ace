@@ -24,6 +24,9 @@ Actor = {
 		// the "this" object, use this to define members & methods.
 		var actor = {};	
 		
+		// name 
+		actor.name = null;
+		
 		// an actor owns 1 sprite object.
 		var m_sprite;
 		actor.setSprite = function (sprite) {
