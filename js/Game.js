@@ -23,16 +23,18 @@ Game = {
 		var game = {};
 		
 		/******************** resources ********************/
-		var m_actors 
-		
-		/******************** graphic process ********************/
-		
 		// background is a simple image for now. so loading & drawing the BG is simple.
 		var m_background = new Image();
 		game.loadBackground = function (imagePath) {
 			m_background.src = imagePath;
 		}
 		
+		// actors is defined in data.js
+		var m_actors = new Array();
+		m_actors.push(data.loadActor("player"));
+		
+		
+		/******************** graphic process ********************/
 		// class Game control the drawing task, so it owned a screen object.
 		var m_screen = null;
 		game.setScreen = function (screen) {
@@ -41,12 +43,14 @@ Game = {
 		
 		// do drawing tasks.
 		game.drawBackground = function () {
-			//m_screen.drawImage(m_background, 0, 0 , 480, 640, 0, 0, 480, 640);
-			m_screen.drawImage(m_background, 0, 0);
+			m_screen.drawImage(m_background, 0, 0 , 480, 640, 0, 0, 480, 640);
+			//m_screen.drawImage(m_background, 0, 0);
 		}
 		
 		game.drawActors = function () {
-			
+			for (i in m_actors) {
+				m_actors[i].draw(m_screen);
+			}
 		}
 		
 		/******************** game logic process ********************/
@@ -63,6 +67,7 @@ Game = {
 			setTimeout("game.loop()", 100);
 			
 			game.drawBackground();
+			game.drawActors();
 		}
 		
 		// return the "this" object, so we have all these members & methonds defined above now.

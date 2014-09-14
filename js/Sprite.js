@@ -50,7 +50,8 @@ Sprite = {
 		
 		// do drawing task.
 		sprite.draw = function (screen) {
-			screen.drawImage(m_image, (m_curFame * m_frameWidth), 0, m_fameWidth, m_frameHeight, m_x, m_y, m_fameWidth, m_frameHeight);
+			//screen.drawImage(m_image, (m_curFrame * m_frameWidth), 0, m_frameWidth, m_frameHeight, m_x, m_y, m_frameWidth, m_frameHeight);
+			screen.drawImage(m_image, m_x, m_y);
 		}
 		
 		// return the "this" object, so we have all these members & methonds defined above now.

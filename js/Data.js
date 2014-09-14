@@ -30,11 +30,20 @@ Data = {
 			return "images/480_720/court.png";
 		}
 		
-		/******************** player ********************/
-		data.loadPlayer = function () {
+		// Load an actor resource using the actor name.
+		data.loadActor = function (actorName) {
+			switch (actorName) {
+			case "player":
+				return loadPlayer();
+			}
+		}
+		
+		// define resource for player.
+		function loadPlayer () {
 			sprite = Sprite.createNew();		// create a new & empty object.
 			sprite.loadImage("images/480_720/player.png")
 			sprite.loadFrames(1, 50, 59);
+			sprite.setPos(300, 300);
 			
 			actor = Actor.createNew();    		// create a new actor object.
 			actor.setSprite(sprite);
