@@ -24,8 +24,9 @@ Actor = {
 		// the "this" object, use this to define members & methods.
 		var actor = {};	
 		
-		// name 
-		actor.name = null;
+		// "name" object is useful while debugging
+		var m_name = name;
+		actor.getName() {return m_name;}
 		
 		// an actor owns 1 sprite object.
 		var m_sprite;
@@ -35,7 +36,16 @@ Actor = {
 		
 		// handle the drawing task.
 		actor.draw = function (screen) {
-			m_sprite.draw(screen);
+			m_sprite.draw(screen, m_x, m_y);
+		}
+
+		
+		// the coordinate of this Actor. handle the drawing tasks.
+		var m_x = 0;
+		var m_y = 0;
+		sprite.setPos = function (x, y) {
+			m_x = x;
+			m_y = y;
 		}
 		
 		// return the "this" object, so we have all these members & methonds defined above now.

@@ -19,9 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 Sprite = {
 	// the create method, to genarate an object.
-	createNew : function () {
+	createNew : function (name) {
 		// the "this" object, use this to define members & methods.
-		var sprite = {};	
+		var sprite = {};
+		
+		// "name" object is useful while debugging
+		var m_name = name;
+		sprite.getName() {return m_name;}
 		
 		// a sprite use a single PNG image.
 		var m_image = new Image();
@@ -39,18 +43,11 @@ Sprite = {
 			m_frameWidth = frameWidth;
 			m_frameHeight = frameHeight;
 		}
-		
-		// the coordinate of this sprite. handle the drawing tasks.
-		var m_x = 0;
-		var m_y = 0;
-		sprite.setPos = function (x, y) {
-			m_x = x;
-			m_y = y;
-		}
+
 		
 		// do drawing task.
-		sprite.draw = function (screen) {
-			screen.drawImage(m_image, (m_curFrame * m_frameWidth), 0, m_frameWidth, m_frameHeight, m_x, m_y, m_frameWidth, m_frameHeight);
+		sprite.draw = function (screen, x, y) {
+			screen.drawImage(m_image, (m_curFrame * m_frameWidth), 0, m_frameWidth, m_frameHeight, x, y, m_frameWidth, m_frameHeight);
 			//screen.drawImage(m_image, m_x, m_y);
 		}
 		

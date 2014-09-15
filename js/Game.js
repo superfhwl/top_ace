@@ -57,6 +57,10 @@ Game = {
 			m_screen.drawImage(m_background, 0, 400, 200, 200, 0, 400, 200, 200);
 			m_screen.drawImage(m_background, 200, 400, 200, 200, 200, 400, 200, 200);
 			m_screen.drawImage(m_background, 400, 400, 80, 200, 400, 400, 80, 200);									
+			m_screen.drawImage(m_background, 0, 600, 200, 40, 0, 600, 200, 40);
+			m_screen.drawImage(m_background, 200, 600, 200, 40, 200, 600, 200, 40);
+			m_screen.drawImage(m_background, 400, 600, 80, 40, 400, 600, 80, 40);		
+
 		}
 		
 		game.drawActors = function () {

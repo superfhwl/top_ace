@@ -55,3 +55,10 @@ Screen = {
 	}
 }
 
+// Copied from the Internet :)
+function assert(bCondition, sErrorMsg) { 
+　　 if (!bCondition) { 
+　　 　　 alert(sErrorMsg); 
+　　 　　 throw new Error(sErrorMsg); 
+　　 } 
+}

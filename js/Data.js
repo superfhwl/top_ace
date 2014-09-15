@@ -49,25 +49,51 @@ Data = {
 			for (i in sprites) {
 				if (spriteName == sprites[i].name) {
 					// create a new & empty object.
-					sprite = Sprite.createNew();
+					sprite = Sprite.createNew(spriteName);
 							
 					sprite.loadImage(sprites[i].imgPath);
 					sprite.loadFrames(sprites[i].frames.count, sprites[i].frames.width, sprites[i].frames.height);
-					sprite.setPos(sprites[i].pos.x, sprites[i].pos.y);
+					
 			
 					return sprite;
 				}
 			}
 		}
+		
+		
 
 		// Actor's resource can't contain AI logic, it will be discribe in actor.js.
+		var actors = new Array();
+		
+		var actor0 = {name: "player", 			pos: {x: 300, y: 300},		visiable: true};
+		actors.push(actor0);
+		var actor1 = {name: "net", 				pos: {x: 60, y: 162},		visiable: true};
+		actors.push(actor1);
+		var actor2 = {name: "poop", 			pos: {x: 130, y: 122},		visiable: true};
+		actors.push(actor2);
+		var actor3 = {name: "powerbar", 		pos: {x: 430, y: 100},		visiable: true};
+		actors.push(actor3);
+		var actor4 = {name: "powercursor", 		pos: {x: 420, y: 300},		visiable: true};
+		actors.push(actor4);
+		
+		
 		data.loadActor = function (actorName) {
-			// create a new actor object.
-			actor = Actor.createNew();    		
+			for (i in actors) {
+				if (actorName == actors[i].name) {
+					// create a new actor object.
+					actor = Actor.createNew(actorName);    		
 			
-			// load sprite data.
-			actor.setSprite(loadSprite(actorName));
-			actor.name = actorName;
+					// load sprite data, sprite & actor use a same name.
+					sprite = loadSprite(actorName);
+					assert((sprite != null), "Load sprite error!");
+					actor.setSprite(sprite);
+					
+					sprite.setPos(sprites[i].pos.x, sprites[i].pos.y);
+					
+					actor.name = actorName;
+				}
+			}
+
 			
 			return actor;
 		}
