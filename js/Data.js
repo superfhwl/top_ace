@@ -31,69 +31,90 @@ Data = {
 		}
 		
 		
-		// Sprite's resorce form in an array, edit this form to match the image size, or add a new row for new spirte.
-		var sprites = new Array();
-
-		var spriteData0 = {name: "player", 			imgPath: "images/480_720/player.png", 			frames: {count: 1, width: 55, height: 65}, 		pos: {x: 300, y: 300}};
-		sprites.push(spriteData0);
-		var spriteData1 = {name: "net", 			imgPath: "images/480_720/net.png", 				frames: {count: 1, width: 380, height: 43}, 	pos: {x: 60, y: 162}};
-		sprites.push(spriteData1);
-		var spriteData2 = {name: "poop", 			imgPath: "images/480_720/poop.png", 			frames: {count: 1, width: 30, height: 25}, 		pos: {x: 130, y: 122}};
-		sprites.push(spriteData2);
-		var spriteData3 = {name: "powerbar", 		imgPath: "images/480_720/powerbar.png", 		frames: {count: 1, width: 17, height: 280}, 	pos: {x: 430, y: 100}};
-		sprites.push(spriteData3);
-		var spriteData4 = {name: "powercursor", 	imgPath: "images/480_720/powercursor.png", 		frames: {count: 1, width: 30, height: 30}, 		pos: {x: 420, y: 300}};
-		sprites.push(spriteData4);
-
+		// Sprite's resorce form in an array, add a new row for new spirte.
+		var spriteData = [
+			{name: "player", 		imgPath: "images/player.png"	},
+			{name: "net", 			imgPath: "images/net.png"		},
+			{name: "poop", 			imgPath: "images/poop.png"		},
+			{name: "powerbar", 		imgPath: "images/powerbar.png"	},
+			{name: "powercursor", 	imgPath: "images/ball.png"		},
+		];
 		function loadSprite (spriteName) {
-			for (i in sprites) {
-				if (spriteName == sprites[i].name) {
+			for (i in spriteData) {
+				if (spriteName == spriteData[i].name) {
 					// create a new & empty object.
 					sprite = Sprite.createNew(spriteName);
-							
-					sprite.loadImage(sprites[i].imgPath);
-					sprite.loadFrames(sprites[i].frames.count, sprites[i].frames.width, sprites[i].frames.height);
 					
+					// load sprite's data.
+					sprite.loadImage(spriteData[i].imgPath);	
 			
 					return sprite;
 				}
 			}
 		}
 		
-		
+		// Animation's resource form in an array, add a new row for a new animation.
+		var animationData = [
+			{name: "player.stand",			frames: {width: 100, height:110, frame: [0]},				loop: false},
+			{name: "player.hit",			frames: {width: 100, height:110, frame: [4, 5, 6, 7]},		loop: false},
+			{name: "player.lanuch",			frames: {width: 100, height:110, frame: [0, 1, 2, 3]},		loop: false},
+			{name: "net.normal",			frames: {width: 1177 , height:132, frame: [0]},				loop: false},
+			{name: "poop.normal",			frames: {width: 71, height:58, frame: [0]},					loop: false},
+			{name: "powerbar.normal",		frames: {width: 60, height:1224, frame: [0]},				loop: false},
+			{name: "powercursor.normal",	frames: {width: 182, height:182, frame: [0]},				loop: false},
+		];
+		function loadAnimation (animationName) {
+			for (i in animationData) {
+				if (animationName == animationData[i].name) {
+					// create a new & empty object.
+					animation = Animation.createNew(animationName);
+					
+					// load animation's data.
+					animation.loadFrames(animationData[i].frames);
+					animation.setLoop(animationData[i].loop);					
+			
+					return animation;
+				}
+			}
+		}
 
+		
 		// Actor's resource can't contain AI logic, it will be discribe in actor.js.
-		var actors = new Array();
-		
-		var actor0 = {name: "player", 			pos: {x: 300, y: 300},		visiable: true};
-		actors.push(actor0);
-		var actor1 = {name: "net", 				pos: {x: 60, y: 162},		visiable: true};
-		actors.push(actor1);
-		var actor2 = {name: "poop", 			pos: {x: 130, y: 122},		visiable: true};
-		actors.push(actor2);
-		var actor3 = {name: "powerbar", 		pos: {x: 430, y: 100},		visiable: true};
-		actors.push(actor3);
-		var actor4 = {name: "powercursor", 		pos: {x: 420, y: 300},		visiable: true};
-		actors.push(actor4);
-		
-		
+		// Edit this from to match screen size.
+		var actorData = [
+			{name: "player", 		pos: {x: 300, y: 300},	visiable: true,		sprites: "player",		animations: ["player.stand", "player.hit", "player.lanuch"]	},
+			{name: "net", 			pos: {x: 60,  y: 162},	visiable: true,		sprites: "net",			animations: ["net.normal"]									},
+			{name: "poop", 			pos: {x: 130, y: 122},	visiable: true,		sprites: "poop",		animations: ["poop.normal"]									},
+			{name: "powerbar", 		pos: {x: 430, y: 100},	visiable: true,		sprites: "powerbar",	animations: ["powerbar.normal"]								},
+			{name: "powercursor", 	pos: {x: 420, y: 300},	visiable: true,		sprites: "powercursor",	animations: ["powercursor.normal"]							},
+		];
 		data.loadActor = function (actorName) {
-			for (i in actors) {
-				if (actorName == actors[i].name) {
+			for (actIdx in actorData) {
+				if (actorName == actorData[actIdx].name) {
 					// create a new actor object.
 					actor = Actor.createNew(actorName);    		
 			
-					// load sprite data, sprite & actor use a same name.
-					sprite = loadSprite(actorName);
-					assert((sprite != null), "Load sprite error!");
-					actor.setSprite(sprite);
+					// load sprite data, sprite name is givend in the from.
+					sprite = loadSprite(actorData[actIdx].sprites);
+					assert((sprite != null), "Load sprite " + actorData[actIdx].sprites + "error!");
+					actor.addSprite(sprite);
 					
-					sprite.setPos(sprites[i].pos.x, sprites[i].pos.y);
+					// load animations data
+					for (aniIdx in actorData[actIdx].animations) {
+						// load animation data, animations' names is listed in form actorData.
+						animation = loadAnimation(actorData[actIdx].animations[aniIdx]);	
+						assert((animation != null),  "Load animation " + actorData[actIdx].animations[aniIdx] + "error!");
+						
+						// add to actor.
+						actor.addAnimation(animation);	
+					}
 					
-					actor.name = actorName;
+					// load actor's data itself.
+					actor.setPos(actorData[actIdx].pos.x, actorData[actIdx].pos.y);
+					
+					return actor;
 				}
 			}
-
 			
 			return actor;
 		}

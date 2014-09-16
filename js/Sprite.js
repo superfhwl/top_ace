@@ -25,7 +25,9 @@ Sprite = {
 		
 		// "name" object is useful while debugging
 		var m_name = name;
-		sprite.getName() {return m_name;}
+		sprite.getName = function () {
+			return m_name;
+		}
 		
 		// a sprite use a single PNG image.
 		var m_image = new Image();
@@ -33,22 +35,15 @@ Sprite = {
 			m_image.src = imgPath;
 		}
 		
-		// We use a very simple animation solusion: increase the x axle in each frame.
-		var m_curFrame = 0;
-		var m_totalFrames = 0;
-		var m_frameWidth = 0;
-		var m_frameHeight = 0;
-		sprite.loadFrames = function (totalFrames, frameWidth, frameHeight) {
-			m_totalFrames = totalFrames;
-			m_frameWidth = frameWidth;
-			m_frameHeight = frameHeight;
-		}
-
-		
 		// do drawing task.
-		sprite.draw = function (screen, x, y) {
-			screen.drawImage(m_image, (m_curFrame * m_frameWidth), 0, m_frameWidth, m_frameHeight, x, y, m_frameWidth, m_frameHeight);
-			//screen.drawImage(m_image, m_x, m_y);
+		sprite.draw = function (screen, x, y, frameWidth, frameHeight, frameIndex) {
+			var clipX = frameIndex * frameWidth;
+			var clipY = 0;
+			var drawX = x * screen.getScale();
+			var drawY = y * screen.getScale();
+			var drawWidth = frameWidth * screen.getScale();
+			var drawHeight = frameHeight * screen.getScale();
+			screen.drawImage(m_image, clipX, clipY, frameWidth, frameHeight, drawX, drawY, drawWidth, drawHeight);
 		}
 		
 		// return the "this" object, so we have all these members & methonds defined above now.
@@ -56,4 +51,51 @@ Sprite = {
 	}
 }
 
+/**
+ The animation skull for an actor. 
+ An actor can have many animations for different states.
+*/ 
+Animation = {
+	// the create method, to genarate an object.
+	createNew : function (name) {
+		// the "this" object, use this to define members & methods.
+		var animation = {};
+		
+		// "name" object is useful while debugging
+		var m_name = name;
+		animation.getName = function () {
+			return m_name;
+		}
+		
+		// We use a very simple animation solusion: increase the x axle in each frame.
+		var m_curFrame = 0;
+		var m_frames = 0;
+		var m_frameCount = 0;
+		animation.loadFrames = function (frames) {
+			m_frames = frames;
+			m_frameCount = frames.frame.length;
+		}
+		
+		animation.getCurFrameId = function () {
+			return m_curFrame;
+		}
+		animation.getFrameWidth = function () {
+			return m_frames.width;
+		}
+		animation.getFrameHeight = function () {
+			return m_frames.height;
+		}
 
+		// is it playing cycle? 
+		var m_loop = false;
+		animation.setLoop = function (loop) {
+			m_loop = loop;
+		}
+		animation.getLoop = function (loop) {
+			return m_loop;
+		}
+		
+		// return the "this" object, so we have all these members & methonds defined above now.
+		return animation;   
+	}
+}

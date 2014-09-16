@@ -24,12 +24,15 @@ Screen = {
 		// the "this" object, use this to define members & methods.
 		var screen = {};	
 		
-		// private members.
-		var m_width = 480;
-		var m_heigth = 640;
-		var m_context = null;
+		// scale for drawing tasks.
+		var m_scale = 480.0 / 1080.0;
+		screen.getScale = function () {
+			return m_scale;
+		}
+		
 		
 		// Initializing function.
+		var m_context = null;
 		screen.init = function() {
 			// get canvas context, use this to draw on canvas.
 			if (m_context == null) {
