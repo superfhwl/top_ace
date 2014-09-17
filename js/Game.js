@@ -24,19 +24,22 @@ Game = {
 		
 		/******************** resources ********************/
 		// background is a simple image for now. so loading & drawing the BG is simple.
-		var m_background = new Image();
-		game.loadBackground = function (imagePath) {
-			m_background.src = imagePath;
+		var m_background = null;
+		game.loadBackground = function () {
+			m_background = data.loadBackground();
 		}
+
 		
 		// actors is defined in data.js
-		var m_actors = new Array();
-		m_actors.push(data.loadActor("player"));
-		m_actors.push(data.loadActor("net"));
-		m_actors.push(data.loadActor("poop"));
-		m_actors.push(data.loadActor("powerbar"));
-		m_actors.push(data.loadActor("powercursor"));
-		
+		var m_actors = null;
+		game.loadActors = function() {
+			m_actors = new Array();
+			m_actors.push(data.loadActor("player"));
+			m_actors.push(data.loadActor("net"));
+			m_actors.push(data.loadActor("poop"));
+			m_actors.push(data.loadActor("powerbar"));
+			m_actors.push(data.loadActor("powercursor"));			
+		}
 		
 		/******************** graphic process ********************/
 		// class Game control the drawing task, so it owned a screen object.
@@ -47,20 +50,7 @@ Game = {
 		
 		// do drawing tasks.
 		game.drawBackground = function () {
-			// There is some issue while drawing big image using this canvas API, use small pieces to draw.
-			m_screen.drawImage(m_background, 0, 0, 200, 200, 0, 0, 200, 200);
-			m_screen.drawImage(m_background, 200, 0, 200, 200, 200, 0, 200, 200);
-			m_screen.drawImage(m_background, 400, 0, 80, 200, 400, 0, 80, 200);
-			m_screen.drawImage(m_background, 0, 200, 200, 200, 0, 200, 200, 200);
-			m_screen.drawImage(m_background, 200, 200, 200, 200, 200, 200, 200, 200);
-			m_screen.drawImage(m_background, 400, 200, 80, 200, 400, 200, 80, 200);
-			m_screen.drawImage(m_background, 0, 400, 200, 200, 0, 400, 200, 200);
-			m_screen.drawImage(m_background, 200, 400, 200, 200, 200, 400, 200, 200);
-			m_screen.drawImage(m_background, 400, 400, 80, 200, 400, 400, 80, 200);									
-			m_screen.drawImage(m_background, 0, 600, 200, 40, 0, 600, 200, 40);
-			m_screen.drawImage(m_background, 200, 600, 200, 40, 200, 600, 200, 40);
-			m_screen.drawImage(m_background, 400, 600, 80, 40, 400, 600, 80, 40);		
-
+			m_screen.drawBigImage(m_background, 0, 0, m_screen.getWidth(), m_screen.getHeight());
 		}
 		
 		game.drawActors = function () {
@@ -105,8 +95,10 @@ function main() {
 	// Create and init the game object.
 	game = Game.createNew();						
 	game.setScreen(screen);				     		// Turn on the main screen.
-	game.loadBackground(data.getBackgroundPath());	// load the background resource.
-	//game.loadActors(data.getAllActors());			// load all the actor's resource.
+	
+	// load game resources.
+	game.loadBackground();		// load the background resource.
+	game.loadActors();			// load all the actor's resource.
 	
 	// start the main loop
 	game.loop();

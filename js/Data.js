@@ -26,10 +26,11 @@ Data = {
 		var data = {};	
 		
 		// Define the background resource by hard coding.
-		data.getBackgroundPath = function () {
-			return "images/480_720/court.png";
+		data.loadBackground = function () {
+			background = new Image();
+			background.src = "images/court.png";
+			return background;
 		}
-		
 		
 		// Sprite's resorce form in an array, add a new row for new spirte.
 		var spriteData = [
@@ -55,12 +56,12 @@ Data = {
 		
 		// Animation's resource form in an array, add a new row for a new animation.
 		var animationData = [
-			{name: "player.stand",			frames: {width: 100, height:110, frame: [0]},				loop: false},
-			{name: "player.hit",			frames: {width: 100, height:110, frame: [4, 5, 6, 7]},		loop: false},
-			{name: "player.lanuch",			frames: {width: 100, height:110, frame: [0, 1, 2, 3]},		loop: false},
-			{name: "net.normal",			frames: {width: 1177 , height:132, frame: [0]},				loop: false},
+			{name: "player.stand",			frames: {width: 177, height:200, frame: [0]},				loop: false},
+			{name: "player.hit",			frames: {width: 177, height:200, frame: [4, 5, 6, 7]},		loop: false},
+			{name: "player.lanuch",			frames: {width: 177, height:200, frame: [0, 1, 2, 3]},		loop: false},
+			{name: "net.normal",			frames: {width: 900 , height:101, frame: [0]},				loop: false},
 			{name: "poop.normal",			frames: {width: 71, height:58, frame: [0]},					loop: false},
-			{name: "powerbar.normal",		frames: {width: 60, height:1224, frame: [0]},				loop: false},
+			{name: "powerbar.normal",		frames: {width: 39, height:800, frame: [0]},				loop: false},
 			{name: "powercursor.normal",	frames: {width: 182, height:182, frame: [0]},				loop: false},
 		];
 		function loadAnimation (animationName) {
@@ -82,10 +83,10 @@ Data = {
 		// Actor's resource can't contain AI logic, it will be discribe in actor.js.
 		// Edit this from to match screen size.
 		var actorData = [
-			{name: "player", 		pos: {x: 300, y: 300},	visiable: true,		sprites: "player",		animations: ["player.stand", "player.hit", "player.lanuch"]	},
-			{name: "net", 			pos: {x: 60,  y: 162},	visiable: true,		sprites: "net",			animations: ["net.normal"]									},
-			{name: "poop", 			pos: {x: 130, y: 122},	visiable: true,		sprites: "poop",		animations: ["poop.normal"]									},
-			{name: "powerbar", 		pos: {x: 430, y: 100},	visiable: true,		sprites: "powerbar",	animations: ["powerbar.normal"]								},
+			{name: "player", 		pos: {x: 600, y: 1020},	visiable: true,		sprites: "player",		animations: ["player.stand", "player.hit", "player.lanuch"]	},
+			{name: "net", 			pos: {x: 120,  y: 700},	visiable: true,		sprites: "net",			animations: ["net.normal"]									},
+			{name: "poop", 			pos: {x: 260, y: 600},	visiable: true,		sprites: "poop",		animations: ["poop.normal"]									},
+			{name: "powerbar", 		pos: {x: 1000, y: 100},	visiable: true,		sprites: "powerbar",	animations: ["powerbar.normal"]								},
 			{name: "powercursor", 	pos: {x: 420, y: 300},	visiable: true,		sprites: "powercursor",	animations: ["powercursor.normal"]							},
 		];
 		data.loadActor = function (actorName) {

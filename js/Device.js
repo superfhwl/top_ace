@@ -25,9 +25,14 @@ Screen = {
 		var screen = {};	
 		
 		// scale for drawing tasks.
-		var m_scale = 480.0 / 1080.0;
+		screen.getWidth = function () {
+			return 480.0;
+		}
+		screen.getHeight = function () {
+			return 853.0;
+		}
 		screen.getScale = function () {
-			return m_scale;
+			return 480.0 / 1080.0;
 		}
 		
 		
@@ -47,11 +52,11 @@ Screen = {
 			m_context.drawImage(img, sx, sy, swidth, sheight, x, y, width, height);
 		}
 		
-		/*
-		screen.drawImage = function (img, x, y) {
-			m_context.drawImage(img, x, y);
+		
+		screen.drawBigImage = function (img, x, y, width, height) {
+			m_context.drawImage(img, x, y, width, height);
 		}
-		*/
+		
 		
 		// return the "this" object, so we have all these members & methonds defined above now.
 		return screen;     
