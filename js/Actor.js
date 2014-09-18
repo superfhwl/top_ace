@@ -25,10 +25,9 @@ Actor = {
 		var actor = {};	
 		
 		// "name" object is useful while debugging
-		var m_name = name;
-		actor.getName = function () {
-			return m_name;
-		}
+		actor.name = name;
+		
+		/********************* recources ********************/
 		
 		// an actor owns 1 sprite object.
 		var m_sprite;
@@ -39,18 +38,22 @@ Actor = {
 		// an actor owns many animations.
 		var m_animations = new Array();
 		actor.addAnimation = function (animation) {
+			
 			m_animations.push(animation);
 		}
 		
 		// actor's states control the animations.
 		var m_curAnimationId = 0;
-		
-		// handle the drawing task.
-		actor.draw = function (screen) {
-			animation = m_animations[m_curAnimationId];
-			m_sprite.draw(screen, m_x, m_y, animation.getFrameWidth(), animation.getFrameHeight(), animation.getCurFrameId());
+		actor.setAnimation = function (name, loopFlag) {
+			for (i in m_animations) {
+				if (name == m_animations[i].name) {
+					m_curAnimationId = i;
+					m_animations[i].setLoop(loopFlag);
+				}
+			}
 		}
 
+		/********************* drawing ********************/
 		
 		// the coordinate of this Actor. handle the drawing tasks.
 		var m_x = 0;
@@ -60,9 +63,90 @@ Actor = {
 			m_y = y;
 		}
 		
+		// handle the drawing task.
+		actor.draw = function (screen) {
+			animation = m_animations[m_curAnimationId];
+			m_sprite.draw(screen, m_x, m_y, animation);
+		}
+		
+		/********************* AI logic ********************/
+		// FSM class handled the AI logic for a specific actor. 
+		// Define a FSM class in actor.js, and contact it's name to the actor's resource in data.js
+		actor.fsm = null;
+		
+		// action & AI
+		actor.action = function (input) {
+			// process AI FSM
+			if (actor.fsm != null) {
+				actor.fsm.play(actor, input);
+			}
+			
+			// play the animation
+			m_animations[m_curAnimationId].play();
+		}
+		
+		
 		// return the "this" object, so we have all these members & methonds defined above now.
 		return actor;     
 	}
 }
 
+/**
+ FSM class for the player.
+*/
+PlayerFSM = {
+	// the create method, to genarate an object.
+	createNew : function (name) {
+		// the "this" object, use this to define members & methods.
+		var fsm = {};	
+		
+		// "name" object is useful while debugging
+		fsm.name = name;
 
+		// FSM states
+		var STATE_STANDING 		= 0;
+		var STATE_LANUCHING 	= 1; 
+		var STATE_HITTING  		= 2;
+		var m_state = STATE_STANDING;
+
+		// AI entry method.
+		fsm.play = function (actor, input) {
+			switch (m_state) {
+			case STATE_STANDING:
+				if (input.isAction("press_screen")) {
+					actor.setAnimation("player.lanuch", false);
+					m_state = STATE_LANUCHING;
+				}
+				break;
+				
+			case STATE_LANUCHING:
+				if (input.isAction("press_screen")) {
+					actor.setAnimation("player.hit", false);
+					m_state = STATE_HITTING;
+				}
+				break;
+
+			case STATE_HITTING:
+				if (input.isAction("press_screen")) {
+					actor.setAnimation("player.stand", false);
+					m_state = STATE_STANDING;
+				}
+				break;
+			}
+		}
+		
+		return fsm;
+	}
+}
+
+/**
+ Register AI process functions
+*/
+function registerAI(actor, ProcFun) {
+	switch (ProcFun) {
+	case "playerFSM":
+		actor.fsm = PlayerFSM.createNew(actor.name);
+		break;
+		
+	}
+}

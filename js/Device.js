@@ -15,8 +15,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 /**
- Class main screen. use the convas function on HTML5.
- Do all the drawing task using this class.
+ Main screen. use the convas function on HTML5. Do all the drawing task using this class.
 */ 
 Screen = {
 	// the create method, to genarate an object.
@@ -63,6 +62,50 @@ Screen = {
 	}
 }
 
+g_screen = Screen.createNew();
+
+/**
+ Input handler.
+*/ 
+Input = {
+	// the create method, to genarate an object.
+	createNew : function () {
+		// the "this" object, use this to define members & methods.
+		var input = {};
+		
+		// We can have more than 1 action per frame.
+		var m_actions = {pressScreen: false};
+		
+		// push a action, we will handle this action when this frame is processed.
+		input.addAction = function (action) {
+			switch (action) {
+			case "press_screen":
+				m_actions.pressScreen = true;
+				break;
+			}
+		}
+		
+		// find out whether this action is inputed?
+		input.isAction = function (action) {
+			switch (action) {
+			case "press_screen":
+				return m_actions.pressScreen;
+				break;
+				
+			}
+		}
+		
+		// flood all actions after a frame is processed.
+		input.clear = function () {
+			m_actions.pressScreen = false;
+		}
+		
+		return input;
+	}
+}
+
+g_input = Input.createNew();
+
 // Copied from the Internet :)
 function assert(bCondition, sErrorMsg) { 
 　　 if (!bCondition) { 
@@ -70,3 +113,8 @@ function assert(bCondition, sErrorMsg) {
 　　 　　 throw new Error(sErrorMsg); 
 　　 } 
 }
+
+function mouseDown() {
+	g_input.addAction("press_screen");
+}
+

@@ -24,10 +24,7 @@ Sprite = {
 		var sprite = {};
 		
 		// "name" object is useful while debugging
-		var m_name = name;
-		sprite.getName = function () {
-			return m_name;
-		}
+		sprite.name = name;
 		
 		// a sprite use a single PNG image.
 		var m_image = new Image();
@@ -62,11 +59,8 @@ Animation = {
 		var animation = {};
 		
 		// "name" object is useful while debugging
-		var m_name = name;
-		animation.getName = function () {
-			return m_name;
-		}
-		
+		animation.name = name;
+
 		// We use a very simple animation solusion: increase the x axle in each frame.
 		var m_curFrame = 0;
 		var m_frames = 0;
@@ -74,6 +68,10 @@ Animation = {
 		animation.loadFrames = function (frames) {
 			m_frames = frames;
 			m_frameCount = frames.frame.length;
+		}
+		
+		setCurFrameId = function (frameId) {
+			m_curFrame = frameId;
 		}
 		
 		animation.getCurFrameId = function () {
@@ -93,6 +91,19 @@ Animation = {
 		}
 		animation.getLoop = function (loop) {
 			return m_loop;
+		}
+		
+		// play the animation
+		animation.play = function () {
+			m_curFrame++;
+			if (m_curFrame >= m_frameCount) {
+				if (m_loop) {
+					m_curFrame = 0;					
+				}
+				else {
+					m_curFrame = m_frameCount;
+				}
+			}
 		}
 		
 		// return the "this" object, so we have all these members & methonds defined above now.

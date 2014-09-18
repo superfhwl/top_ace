@@ -83,11 +83,11 @@ Data = {
 		// Actor's resource can't contain AI logic, it will be discribe in actor.js.
 		// Edit this from to match screen size.
 		var actorData = [
-			{name: "player", 		pos: {x: 600, y: 1020},	visiable: true,		sprites: "player",		animations: ["player.stand", "player.hit", "player.lanuch"]	},
-			{name: "net", 			pos: {x: 120,  y: 700},	visiable: true,		sprites: "net",			animations: ["net.normal"]									},
-			{name: "poop", 			pos: {x: 260, y: 600},	visiable: true,		sprites: "poop",		animations: ["poop.normal"]									},
-			{name: "powerbar", 		pos: {x: 1000, y: 100},	visiable: true,		sprites: "powerbar",	animations: ["powerbar.normal"]								},
-			{name: "powercursor", 	pos: {x: 420, y: 300},	visiable: true,		sprites: "powercursor",	animations: ["powercursor.normal"]							},
+			{name: "player", 		pos: {x: 600, y: 1020},	visiable: true,		sprites: "player",		animations: ["player.stand", "player.hit", "player.lanuch"]	, AI: "playerFSM"},
+			{name: "net", 			pos: {x: 120,  y: 700},	visiable: true,		sprites: "net",			animations: ["net.normal"]									, AI: null},
+			{name: "poop", 			pos: {x: 260, y: 600},	visiable: true,		sprites: "poop",		animations: ["poop.normal"]									, AI: null},
+			{name: "powerbar", 		pos: {x: 1000, y: 100},	visiable: true,		sprites: "powerbar",	animations: ["powerbar.normal"]								, AI: null},
+			{name: "powercursor", 	pos: {x: 420, y: 300},	visiable: true,		sprites: "powercursor",	animations: ["powercursor.normal"]							, AI: null},
 		];
 		data.loadActor = function (actorName) {
 			for (actIdx in actorData) {
@@ -113,6 +113,9 @@ Data = {
 					// load actor's data itself.
 					actor.setPos(actorData[actIdx].pos.x, actorData[actIdx].pos.y);
 					
+					// Register actor's AI process functions.
+					registerAI(actor, actorData[actIdx].AI);
+					
 					return actor;
 				}
 			}
@@ -125,5 +128,3 @@ Data = {
 		return data;     
 	}
 }
-
-

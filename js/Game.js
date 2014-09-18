@@ -49,17 +49,28 @@ Game = {
 		}
 		
 		// do drawing tasks.
-		game.drawBackground = function () {
+		function drawBackground() {
 			m_screen.drawBigImage(m_background, 0, 0, m_screen.getWidth(), m_screen.getHeight());
 		}
 		
-		game.drawActors = function () {
+		function drawActors() {
 			for (i in m_actors) {
 				m_actors[i].draw(m_screen);
 			}
 		}
 		
 		/******************** game logic process ********************/
+		// the input object will handle the player's action.
+		var m_input = null;
+		game.setInput = function (input) {
+			m_input = input;
+		}
+		
+		function action(input) {
+			for (i in m_actors) {
+				m_actors[i].action(input);
+			}
+		}
 		
 		
 		/******************** input process ********************/
@@ -72,8 +83,15 @@ Game = {
 			// fps: 10
 			setTimeout("game.loop()", 100);
 			
-			game.drawBackground();
-			game.drawActors();
+			// game logic & AI process.
+			action(m_input);
+			
+			// drawing taskes.
+			drawBackground();
+			drawActors();
+			
+			// flood inputs
+			m_input.clear();
 		}
 		
 		// return the "this" object, so we have all these members & methonds defined above now.
@@ -88,13 +106,15 @@ function main() {
 	// Create a data object to use game resource.
 	data = Data.createNew();
 	
-	// Create & init a screen object.
-	screen = Screen.createNew();
-	screen.init();
-	
 	// Create and init the game object.
 	game = Game.createNew();						
-	game.setScreen(screen);				     		// Turn on the main screen.
+	
+	// Turn on the main screen.
+	g_screen.init();
+	game.setScreen(g_screen);		
+	
+	// Listen the player's input.
+	game.setInput(g_input);		
 	
 	// load game resources.
 	game.loadBackground();		// load the background resource.
