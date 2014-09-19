@@ -38,7 +38,6 @@ Actor = {
 		// an actor owns many animations.
 		var m_animations = new Array();
 		actor.addAnimation = function (animation) {
-			
 			m_animations.push(animation);
 		}
 		
@@ -49,6 +48,7 @@ Actor = {
 				if (name == m_animations[i].name) {
 					m_curAnimationId = i;
 					m_animations[i].setLoop(loopFlag);
+					m_animations[i].restart();
 				}
 			}
 		}

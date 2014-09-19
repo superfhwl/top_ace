@@ -33,7 +33,11 @@ Sprite = {
 		}
 		
 		// do drawing task.
-		sprite.draw = function (screen, x, y, frameWidth, frameHeight, frameIndex) {
+		sprite.draw = function (screen, x, y, animation) {
+			frameIndex = animation.getCurFrameId();
+			frameWidth = animation.getFrameWidth();
+			frameHeight = animation.getFrameHeight();
+			
 			var clipX = frameIndex * frameWidth;
 			var clipY = 0;
 			var drawX = x * screen.getScale();
@@ -64,48 +68,71 @@ Animation = {
 		// We use a very simple animation solusion: increase the x axle in each frame.
 		var m_curFrame = 0;
 		var m_frames = 0;
-		var m_frameCount = 0;
+		
 		animation.loadFrames = function (frames) {
 			m_frames = frames;
-			m_frameCount = frames.frame.length;
-		}
-		
-		setCurFrameId = function (frameId) {
-			m_curFrame = frameId;
 		}
 		
 		animation.getCurFrameId = function () {
-			return m_curFrame;
+			return m_frames.offset[m_curFrame];
 		}
+		
 		animation.getFrameWidth = function () {
 			return m_frames.width;
 		}
+		
 		animation.getFrameHeight = function () {
 			return m_frames.height;
 		}
+		
+		animation.getFrameCount = function () {
+			return m_frames.offset.length;
+		}
+		
+		// play / stop / replay the animation
+		animation.play = function () {
+			if (m_paused) {
+				return;
+			}
+			
+			if (m_curFrame < animation.getFrameCount() - 1) {
+				m_curFrame++;		// Go ahead until we reach the last frame.
+			}
+			else if (m_loop) {
+				m_curFrame = 0;		// If loop, goto the first frame, if not, just keep staying in the last frame.
+			}			
+		}
+		
+		var m_paused = false;
+		
+		animation.pause = function () {
+			m_paused = true;
+		}
+		
+		animation.stop = function () {
+			m_paused = true;
+			m_curFrame = 0;
+		}
+		
+		animation.start = function () {
+			m_paused = false;
+		}
+		
+		animation.restart = function () {
+			animation.stop();
+			animation.start();
+		}
 
-		// is it playing cycle? 
 		var m_loop = false;
+		
 		animation.setLoop = function (loop) {
 			m_loop = loop;
 		}
-		animation.getLoop = function (loop) {
+		
+		animation.getLoop = function () {
 			return m_loop;
 		}
-		
-		// play the animation
-		animation.play = function () {
-			m_curFrame++;
-			if (m_curFrame >= m_frameCount) {
-				if (m_loop) {
-					m_curFrame = 0;					
-				}
-				else {
-					m_curFrame = m_frameCount;
-				}
-			}
-		}
-		
+
 		// return the "this" object, so we have all these members & methonds defined above now.
 		return animation;   
 	}

@@ -56,13 +56,13 @@ Data = {
 		
 		// Animation's resource form in an array, add a new row for a new animation.
 		var animationData = [
-			{name: "player.stand",			frames: {width: 177, height:200, frame: [0]},				loop: false},
-			{name: "player.hit",			frames: {width: 177, height:200, frame: [4, 5, 6, 7]},		loop: false},
-			{name: "player.lanuch",			frames: {width: 177, height:200, frame: [0, 1, 2, 3]},		loop: false},
-			{name: "net.normal",			frames: {width: 900 , height:101, frame: [0]},				loop: false},
-			{name: "poop.normal",			frames: {width: 71, height:58, frame: [0]},					loop: false},
-			{name: "powerbar.normal",		frames: {width: 39, height:800, frame: [0]},				loop: false},
-			{name: "powercursor.normal",	frames: {width: 182, height:182, frame: [0]},				loop: false},
+			{name: "player.stand",			frames: {width: 177, 	height:200, offset: [0]},				loop: false},
+			{name: "player.hit",			frames: {width: 177, 	height:200, offset: [4, 5, 6, 7]},		loop: false},
+			{name: "player.lanuch",			frames: {width: 177, 	height:200, offset: [0, 1, 2, 3]},		loop: false},
+			{name: "net.normal",			frames: {width: 900 , 	height:101, offset: [0]},				loop: false},
+			{name: "poop.normal",			frames: {width: 71, 	height:58, 	offset: [0]},				loop: false},
+			{name: "powerbar.normal",		frames: {width: 39, 	height:800, offset: [0]},				loop: false},
+			{name: "powercursor.normal",	frames: {width: 182, 	height:182, offset: [0]},				loop: false},
 		];
 		function loadAnimation (animationName) {
 			for (i in animationData) {
