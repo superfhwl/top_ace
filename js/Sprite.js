@@ -38,12 +38,12 @@ Sprite = {
 			frameWidth = animation.getFrameWidth();
 			frameHeight = animation.getFrameHeight();
 			
-			var clipX = frameIndex * frameWidth;
-			var clipY = 0;
-			var drawX = x * screen.getScale();
-			var drawY = y * screen.getScale();
-			var drawWidth = frameWidth * screen.getScale();
-			var drawHeight = frameHeight * screen.getScale();
+			clipX = frameIndex * frameWidth;
+			clipY = 0;
+			drawX = x * screen.getScale();
+			drawY = y * screen.getScale();
+			drawWidth = frameWidth * screen.getScale();
+			drawHeight = frameHeight * screen.getScale();
 			screen.drawImage(m_image, clipX, clipY, frameWidth, frameHeight, drawX, drawY, drawWidth, drawHeight);
 		}
 		
@@ -51,6 +51,50 @@ Sprite = {
 		return sprite;     
 	}
 }
+
+/**
+ The vectorgraphic is a graphic object like a image sprite, but drawed by calling systme API.
+*/ 
+VectorGraphic = {
+	// the create method, to genarate an object.
+	createNew : function (name) {
+		// the "this" object, use this to define members & methods.
+		var vector = {};
+		
+		// "name" object is useful while debugging
+		vector.name = name;
+
+		
+		// For vactor drawing animations, we use a drawFunction to handle drawing tasks.
+		var m_drawFunction = null;
+		
+		vector.setDrawFunction = function (funcName) {
+			switch (funcName) {
+			case "powerbar.normal":
+				m_drawFunction = drawPowerBar;
+				break;
+			}
+		}
+		
+		// do drawing task.
+		vactor.draw = function (screen, x, y, animation) {
+			frameIndex = animation.getCurFrameId();
+
+			drawX = x * screen.getScale();
+			drawY = y * screen.getScale();
+
+			m_drawFunction(screen, drawX, drawY, frameIndex);
+		}
+		
+
+		// call the init method
+		vector.setDrawFunction(name);
+
+		// return the "this" object, so we have all these members & methonds defined above now.
+		return vector;   
+	}
+}
+
 
 /**
  The animation skull for an actor. 
@@ -65,9 +109,9 @@ Animation = {
 		// "name" object is useful while debugging
 		animation.name = name;
 
-		// We use a very simple animation solusion: increase the x axle in each frame.
+		// For sprites witch based in image, we use a very simple animation solusion: increase the x axle in each frame.
 		var m_curFrame = 0;
-		var m_frames = 0;
+		var m_frames = null;
 		
 		animation.loadFrames = function (frames) {
 			m_frames = frames;
@@ -100,7 +144,7 @@ Animation = {
 			}
 			else if (m_loop) {
 				m_curFrame = 0;		// If loop, goto the first frame, if not, just keep staying in the last frame.
-			}			
+			}
 		}
 		
 		var m_paused = false;
@@ -136,4 +180,12 @@ Animation = {
 		// return the "this" object, so we have all these members & methonds defined above now.
 		return animation;   
 	}
+}
+
+
+
+function drawPowerBar(screen, x, y, frameId) {
+	var frameData = [
+		
+	];
 }

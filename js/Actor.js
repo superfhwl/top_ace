@@ -29,11 +29,18 @@ Actor = {
 		
 		/********************* recources ********************/
 		
-		// an actor owns 1 sprite object.
+		// an actor owns 1 image sprite object.
 		var m_sprite;
 		actor.addSprite = function (sprite) {
 			m_sprite = sprite;
 		}
+		
+		// an actor owns 1 vector graphic object.
+		var m_vectorGraphic;
+		actor.addVectorGraphic = function (vector) {
+			m_vectorGraphic = vector;
+		}
+		
 		
 		// an actor owns many animations.
 		var m_animations = new Array();
@@ -85,6 +92,17 @@ Actor = {
 			m_animations[m_curAnimationId].play();
 		}
 		
+		/**
+		 Register AI process functions
+		*/
+		actor.registerAI = function (ProcFun) {
+			switch (ProcFun) {
+			case "playerFSM":
+				actor.fsm = PlayerFSM.createNew(actor.name);
+				break;
+		
+			}
+		}
 		
 		// return the "this" object, so we have all these members & methonds defined above now.
 		return actor;     
@@ -139,14 +157,3 @@ PlayerFSM = {
 	}
 }
 
-/**
- Register AI process functions
-*/
-function registerAI(actor, ProcFun) {
-	switch (ProcFun) {
-	case "playerFSM":
-		actor.fsm = PlayerFSM.createNew(actor.name);
-		break;
-		
-	}
-}
