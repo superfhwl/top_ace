@@ -56,6 +56,39 @@ Screen = {
 			m_context.drawImage(img, x, y, width, height);
 		}
 		
+		screen.drawRectangle = function (x, y, width, height, color, borderWidth) {
+			// draw the border first.
+		    m_context.lineWidth = borderWidth;
+		    m_context.strokeStyle = color;
+			m_context.strokeRect(x, y, width, height);
+		}
+		
+		screen.fillLinearGradientRectangle = function (x, y, width, height, color1, color2, direction) {
+			var linear;
+			
+			switch (direction) {
+			case "vertical_up":
+				linear = m_context.createLinearGradient(x, y + height, x, y);
+				break;
+			case "vertical_down":
+				linear = m_context.createLinearGradient(x, y, x, y + height);
+				break;
+			case "horizontal_left":
+				linear = m_context.createLinearGradient(x + width, y, x, y);
+				break;
+			case "horizontal_right":
+				linear = m_context.createLinearGradient(x, y, x + width, y);
+				break;
+				
+			}
+			
+			m_context.addColorStop(0, color1);
+			m_context.addColorStop(1, color2);
+			m_context.fillStyle(linear);
+			m_context.fillRect(x, y, x + width, y + height);
+		}
+		
+		
 		
 		// return the "this" object, so we have all these members & methonds defined above now.
 		return screen;     

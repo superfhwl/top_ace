@@ -70,20 +70,24 @@ VectorGraphic = {
 		
 		vector.setDrawFunction = function (funcName) {
 			switch (funcName) {
-			case "powerbar.normal":
+			case "powerbar":
 				m_drawFunction = drawPowerBar;
 				break;
+				
 			}
 		}
 		
 		// do drawing task.
-		vactor.draw = function (screen, x, y, animation) {
+		vector.draw = function (screen, x, y, animation) {
 			frameIndex = animation.getCurFrameId();
+			frameWidth = animation.getFrameWidth();
+			frameHeight = animation.getFrameHeight();
 
 			drawX = x * screen.getScale();
 			drawY = y * screen.getScale();
-
-			m_drawFunction(screen, drawX, drawY, frameIndex);
+			drawWidth = frameWidth * screen.getScale();
+			drawHeight = frameHeight * screen.getScale();
+			m_drawFunction(screen, drawX, drawY, drawWidth, drawHeight, frameIndex);
 		}
 		
 
@@ -183,9 +187,12 @@ Animation = {
 }
 
 
-
-function drawPowerBar(screen, x, y, frameId) {
-	var frameData = [
-		
-	];
+/**
+ The draw function for powerbar object.
+*/
+function drawPowerBar(screen, x, y, width, height, frameIndex) {
+	// draw the border first.
+	screen.drawRectangle(x, y, width, height, "#d3d3d3", 0.5);
+	
+	screen.fillLinearGradientRectangle(screen, x, y, width, height, 'red', 'yellow');
 }

@@ -59,9 +59,9 @@ Data = {
 			{name: "player.lanuch",			loop: false,	frameData: {width: 177, 	height:200, offset: [0, 1, 2, 3]},		},
 			{name: "net.normal",			loop: false,	frameData: {width: 900 , 	height:101, offset: [0]},				},
 			{name: "poop.normal",			loop: false,	frameData: {width: 71, 		height:58, 	offset: [0]},				},
-			{name: "powerbar.normal",		loop: false,	frameData: {width: 200, 	height:500, offset: [0]},				},
-			{name: "powerbar.launch",		loop: false,	frameData: {width: 200, 	height:500, offset: [1,1, 2,2, 3,3, 4,4, 5,5, 6,6, 7,7, 8, 7,7, 6,6, 5,5, 4,4, 3,3, 2,2, 1,1},	},
-			{name: "powerbar.max",			loop: true,		frameData: {width: 200, 	height:500, offset: [8, 9]},			},
+			{name: "powerbar.normal",		loop: false,	frameData: {width: 40, 		height:700, offset: [0]},				},
+			{name: "powerbar.launch",		loop: false,	frameData: {width: 40, 		height:700, offset: [1,1, 2,2, 3,3, 4,4, 5,5, 6,6, 7,7, 8, 7,7, 6,6, 5,5, 4,4, 3,3, 2,2, 1,1]},	},
+			{name: "powerbar.max",			loop: true,		frameData: {width: 40, 		height:700, offset: [8, 9]},			},
 		];
 		function loadAnimation (animationName) {
 			for (i in animationData) {
@@ -84,7 +84,7 @@ Data = {
 			{name: "player", 		pos: {x: 600, y: 1020},	visiable: true,		graphicType: "image",	sprites: "player",				animations: ["player.stand", "player.hit", "player.lanuch"]				, AI: "playerFSM"},
 			{name: "net", 			pos: {x: 120,  y: 700},	visiable: true,		graphicType: "image",	sprites: "net",					animations: ["net.normal"]												, AI: null},
 			{name: "poop", 			pos: {x: 260, y: 600},	visiable: true,		graphicType: "image",	sprites: "poop",				animations: ["poop.normal"]												, AI: null},
-			{name: "powerbar", 		pos: {x: 1000, y: 100},	visiable: true,		graphicType: "vector",	vectorGraphic: "powerbar",		animations: ["powerbar.normal", "powerbar.launch", "powerbar.max"], 	, AI: "powerBarFSM"},
+			{name: "powerbar", 		pos: {x: 990, y: 500},	visiable: true,		graphicType: "vector",	vectorGraphic: "powerbar",		animations: ["powerbar.normal", "powerbar.launch", "powerbar.max"]	 	, AI: "powerBarFSM"},
 		];
 		data.loadActor = function (actorName) {
 			for (actIdx in actorData) {
@@ -93,20 +93,19 @@ Data = {
 					actor = Actor.createNew(actorName);    		
 			
 					// load sprite data, sprite name is given in the from.
-					if (graphicType == "image") {
+					if (actorData[actIdx].graphicType == "image") {
 						spriteName = actorData[actIdx].sprites;
 
 						sprite = loadSprite(spriteName);
-						assert(sprite != null, "Load spirte " + spriteName + " failed.")				
+						assert(sprite != null, "Load spirte " + spriteName + " failed.");			
 					
 						actor.addSprite(sprite);
-						}
 					}
-					else if (graphicType == "vector") {
+					else if (actorData[actIdx].graphicType == "vector") {
 						vgName = actorData[actIdx].vectorGraphic;
 						
 						vectorGraphic = VectorGraphic.createNew(vgName);
-						assert(vectorGraphic != null, "Load vector graphic " + vgName + " failed.")			
+						assert(vectorGraphic != null, "Load vector graphic " + vgName + " failed.");	
 						
 						actor.addVectorGraphic(vectorGraphic);
 					}
@@ -126,8 +125,6 @@ Data = {
 					
 					// Register actor's AI process functions.
 					actor.registerAI(actorData[actIdx].AI);
-					
-					return actor;
 				}
 			}
 			

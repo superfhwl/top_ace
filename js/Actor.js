@@ -73,7 +73,16 @@ Actor = {
 		// handle the drawing task.
 		actor.draw = function (screen) {
 			animation = m_animations[m_curAnimationId];
-			m_sprite.draw(screen, m_x, m_y, animation);
+			
+			// if have image sprite, draw first
+			if (m_sprite != null) {
+				m_sprite.draw(screen, m_x, m_y, animation);				
+			}
+			
+			// if have vector grapic , draw after sprite.
+			if (m_vectorGraphic != null) {
+				m_vectorGraphic.draw(screen, m_x, m_y, animation);				
+			}
 		}
 		
 		/********************* AI logic ********************/
