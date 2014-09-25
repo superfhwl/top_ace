@@ -47,24 +47,28 @@ Screen = {
 		}
 		
 		// Draw an image on canvas object
-		screen.drawImage = function (img, sx, sy, swidth, sheight, x, y, width, height) {
-			m_context.drawImage(img, sx, sy, swidth, sheight, x, y, width, height);
+		screen.drawImage = function (img, srcRect, dstRect) {
+			m_context.drawImage(img, srcRect.x, srcRect.y, srcRect.width, srcRect.height, dstRect.x, dstRect.y, dstRect.width, dstRect.height);
 		}
 		
 		
-		screen.drawBigImage = function (img, x, y, width, height) {
-			m_context.drawImage(img, x, y, width, height);
+		screen.drawBigImage = function (img, dstRect) {
+			m_context.drawImage(img, dstRect.x, dstRect.y, dstRect.width, dstRect.height);
 		}
 		
-		screen.drawRectangle = function (x, y, width, height, color, borderWidth) {
+		screen.drawRectangle = function (dstRect, color, borderWidth) {
 			// draw the border first.
 		    m_context.lineWidth = borderWidth;
 		    m_context.strokeStyle = color;
-			m_context.strokeRect(x, y, width, height);
+			m_context.strokeRect(dstRect.x, dstRect.y, dstRect.width, dstRect.height);
 		}
 		
-		screen.fillLinearGradientRectangle = function (x, y, width, height, color1, color2, direction) {
+		function createLinearGradient (rect, direction) {
 			var linear;
+			x = rect.x;
+			y = rect.y;
+			width = rect.width;
+			height = rect.height;
 			
 			switch (direction) {
 			case "vertical_up":
@@ -82,10 +86,20 @@ Screen = {
 				
 			}
 			
-			m_context.addColorStop(0, color1);
-			m_context.addColorStop(1, color2);
-			m_context.fillStyle(linear);
-			m_context.fillRect(x, y, x + width, y + height);
+			return linear;
+		}
+		
+		screen.fillLinearGradientRectangle = function (clipRect, dstRect, color1, color2, direction) {
+			linear = createLinearGradient(dstRect, direction);
+			linear.addColorStop(0, color1);
+			linear.addColorStop(1, color2);
+			m_context.fillStyle = linear;
+			
+			fillX = max(clipRect.x, dstRect.x);
+			fillY = max(clipRect.y, dstRect.y);
+			fillWidth = min(clipRect.width, dstRect.width);
+			fillHeight = min(clipRect.height, dstRect.height);
+			m_context.fillRect(fillX, fillY, fillWidth, fillHeight);
 		}
 		
 		
@@ -151,3 +165,20 @@ function mouseDown() {
 	g_input.addAction("press_screen");
 }
 
+function max(a, b) {
+	if (a > b) {
+		return a;
+	}
+	else {
+		return b;
+	}
+}
+
+function min(a, b) {
+	if (a < b) {
+		return a;
+	}
+	else {
+		return b;
+	}
+}

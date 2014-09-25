@@ -33,18 +33,15 @@ Sprite = {
 		}
 		
 		// do drawing task.
-		sprite.draw = function (screen, x, y, animation) {
+		sprite.draw = function (screen, srcX, srcY, animation) {
 			frameIndex = animation.getCurFrameId();
 			frameWidth = animation.getFrameWidth();
 			frameHeight = animation.getFrameHeight();
 			
-			clipX = frameIndex * frameWidth;
-			clipY = 0;
-			drawX = x * screen.getScale();
-			drawY = y * screen.getScale();
-			drawWidth = frameWidth * screen.getScale();
-			drawHeight = frameHeight * screen.getScale();
-			screen.drawImage(m_image, clipX, clipY, frameWidth, frameHeight, drawX, drawY, drawWidth, drawHeight);
+			srcRect = {x: frameIndex * frameWidth, 		y: 0, 							width: frameWidth, 							height: frameHeight};
+			dstRect = {x: srcX * screen.getScale(), 	y: srcY * screen.getScale(), 	width: frameWidth * screen.getScale(), 		height: frameHeight * screen.getScale()};
+
+			screen.drawImage(m_image, srcRect, dstRect);
 		}
 		
 		// return the "this" object, so we have all these members & methonds defined above now.
@@ -78,16 +75,14 @@ VectorGraphic = {
 		}
 		
 		// do drawing task.
-		vector.draw = function (screen, x, y, animation) {
+		vector.draw = function (screen, srcX, srcY, animation) {
 			frameIndex = animation.getCurFrameId();
 			frameWidth = animation.getFrameWidth();
 			frameHeight = animation.getFrameHeight();
 
-			drawX = x * screen.getScale();
-			drawY = y * screen.getScale();
-			drawWidth = frameWidth * screen.getScale();
-			drawHeight = frameHeight * screen.getScale();
-			m_drawFunction(screen, drawX, drawY, drawWidth, drawHeight, frameIndex);
+			
+			drawRect = {x: srcX * screen.getScale(), y: srcY * screen.getScale(), width: frameWidth * screen.getScale(), height: frameHeight * screen.getScale()};
+			m_drawFunction(screen, drawRect, frameIndex);
 		}
 		
 
@@ -190,9 +185,13 @@ Animation = {
 /**
  The draw function for powerbar object.
 */
-function drawPowerBar(screen, x, y, width, height, frameIndex) {
-	// draw the border first.
-	screen.drawRectangle(x, y, width, height, "#d3d3d3", 0.5);
+function drawPowerBar(screen, drawRect, frameIndex) {
+	level = drawRect.y + (((9 - frameIndex) / 9) * drawRect.height);
 	
-	screen.fillLinearGradientRectangle(screen, x, y, width, height, 'red', 'yellow');
+	clipRect = {x: drawRect.x, y: level, width: drawRect.width, height: (drawRect.y + drawRect.height) - level};
+	screen.fillLinearGradientRectangle(clipRect, drawRect, 'yellow', 'red', "vertical_up");
+	
+	// draw the border.
+	screen.drawRectangle(drawRect, "#d3d3d3", 0.5);
+
 }

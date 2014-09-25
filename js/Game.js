@@ -50,7 +50,8 @@ Game = {
 		
 		// do drawing tasks.
 		function drawBackground() {
-			m_screen.drawBigImage(m_background, 0, 0, m_screen.getWidth(), m_screen.getHeight());
+			dstRect = {x: 0, y: 0, width: m_screen.getWidth(), height: m_screen.getHeight()};
+			m_screen.drawBigImage(m_background, dstRect);
 		}
 		
 		function drawActors() {
