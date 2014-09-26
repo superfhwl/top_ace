@@ -109,7 +109,7 @@ Animation = {
 		animation.name = name;
 
 		// For sprites witch based in image, we use a very simple animation solusion: increase the x axle in each frame.
-		var m_curFrame = 0;
+		var m_offset = 0;
 		var m_frames = null;
 		
 		animation.loadFrames = function (frames) {
@@ -117,7 +117,7 @@ Animation = {
 		}
 		
 		animation.getCurFrameId = function () {
-			return m_frames.offset[m_curFrame];
+			return m_frames.frameIDArray[m_offset];
 		}
 		
 		animation.getFrameWidth = function () {
@@ -129,7 +129,7 @@ Animation = {
 		}
 		
 		animation.getFrameCount = function () {
-			return m_frames.offset.length;
+			return m_frames.frameIDArray.length;
 		}
 		
 		// play / stop / replay the animation
@@ -138,11 +138,11 @@ Animation = {
 				return;
 			}
 			
-			if (m_curFrame < animation.getFrameCount() - 1) {
-				m_curFrame++;		// Go ahead until we reach the last frame.
+			if (m_offset < animation.getFrameCount() - 1) {
+				m_offset++;		// Go ahead until we reach the last frame.
 			}
 			else if (m_loop) {
-				m_curFrame = 0;		// If loop, goto the first frame, if not, just keep staying in the last frame.
+				m_offset = 0;		// If loop, goto the first frame, if not, just keep staying in the last frame.
 			}
 		}
 		
@@ -154,7 +154,7 @@ Animation = {
 		
 		animation.stop = function () {
 			m_paused = true;
-			m_curFrame = 0;
+			m_offset = 0;
 		}
 		
 		animation.start = function () {
@@ -186,7 +186,8 @@ Animation = {
  The draw function for powerbar object.
 */
 function drawPowerBar(screen, drawRect, frameIndex) {
-	level = drawRect.y + (((9 - frameIndex) / 9) * drawRect.height);
+	POWER_BAR_MAX_FRAME = 8;
+	level = drawRect.y + (((POWER_BAR_MAX_FRAME - frameIndex) / POWER_BAR_MAX_FRAME) * drawRect.height);
 	
 	clipRect = {x: drawRect.x, y: level, width: drawRect.width, height: (drawRect.y + drawRect.height) - level};
 	screen.fillLinearGradientRectangle(clipRect, drawRect, 'yellow', 'red', "vertical_up");

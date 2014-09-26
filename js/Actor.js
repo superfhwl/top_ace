@@ -56,9 +56,24 @@ Actor = {
 					m_curAnimationId = i;
 					m_animations[i].setLoop(loopFlag);
 					m_animations[i].restart();
+					
+					loginfo("Set animation " + m_animations[i].name + " .");
 				}
 			}
 		}
+		
+		actor.pauseAnimation = function () {
+			m_animations[m_curAnimationId].pause();
+		}
+		
+		actor.resumeAnimation = function () {
+			m_animations[m_curAnimationId].start();
+		}
+		
+		actor.getCurFrameId = function () {
+			return m_animations[m_curAnimationId].getCurFrameId();
+		}
+		
 
 		/********************* drawing ********************/
 		
@@ -109,7 +124,10 @@ Actor = {
 			case "playerFSM":
 				actor.fsm = PlayerFSM.createNew(actor.name);
 				break;
-		
+				
+			case "powerBarFSM":
+				actor.fsm = PowerBarFSM.createNew(actor.name);
+				break;
 			}
 		}
 		
@@ -166,3 +184,58 @@ PlayerFSM = {
 	}
 }
 
+/**
+ Power bar's AI
+*/
+PowerBarFSM = {
+	// the create method, to genarate an object.
+	createNew : function (name) {
+		// the "this" object, use this to define members & methods.
+		var fsm = {};	
+		
+		// "name" object is useful while debugging
+		fsm.name = name;
+
+		// FSM states
+		var STATE_NORMAL 		= 0;
+		var STATE_LANUCHING 	= 1; 
+		var STATE_HITTING  		= 2;
+		var m_state = STATE_NORMAL;
+
+		// max frame control the power animation
+		var POWER_BAR_MAX_FRAME = 8;
+
+		// AI entry method.
+		fsm.play = function (actor, input) {
+			switch (m_state) {
+			case STATE_NORMAL:
+				if (input.isAction("press_screen")) {
+					actor.setAnimation("powerbar.launch", false);
+					m_state = STATE_LANUCHING;
+				}
+				break;
+				
+			case STATE_LANUCHING:
+				if (input.isAction("press_screen")) {
+					if (actor.getCurFrameId() == POWER_BAR_MAX_FRAME) {
+						actor.setAnimation("powerbar.max", true);
+					}
+					else {
+						actor.pauseAnimation();
+					}
+					m_state = STATE_HITTING;
+				}
+				break;
+
+			case STATE_HITTING:
+				if (input.isAction("press_screen")) {
+					actor.setAnimation("powerbar.normal", false);
+					m_state = STATE_NORMAL;
+				}
+				break;
+			}
+		}
+		
+		return fsm;
+	}
+}

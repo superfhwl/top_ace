@@ -153,32 +153,6 @@ Input = {
 
 g_input = Input.createNew();
 
-// Copied from the Internet :)
-function assert(bCondition, sErrorMsg) { 
-　　 if (!bCondition) { 
-　　 　　 alert(sErrorMsg); 
-　　 　　 throw new Error(sErrorMsg); 
-　　 } 
-}
-
 function mouseDown() {
 	g_input.addAction("press_screen");
-}
-
-function max(a, b) {
-	if (a > b) {
-		return a;
-	}
-	else {
-		return b;
-	}
-}
-
-function min(a, b) {
-	if (a < b) {
-		return a;
-	}
-	else {
-		return b;
-	}
 }

@@ -54,14 +54,14 @@ Data = {
 		
 		// Animation's resource form in an array, add a new row for a new animation.
 		var animationData = [
-			{name: "player.stand",			loop: false,	frameData: {width: 177, 	height:200, offset: [0]},				},
-			{name: "player.hit",			loop: false,	frameData: {width: 177, 	height:200, offset: [4, 5, 6, 7]},		},
-			{name: "player.lanuch",			loop: false,	frameData: {width: 177, 	height:200, offset: [0, 1, 2, 3]},		},
-			{name: "net.normal",			loop: false,	frameData: {width: 900 , 	height:101, offset: [0]},				},
-			{name: "poop.normal",			loop: false,	frameData: {width: 71, 		height:58, 	offset: [0]},				},
-			{name: "powerbar.normal",		loop: false,	frameData: {width: 40, 		height:700, offset: [0]},				},
-			{name: "powerbar.launch",		loop: false,	frameData: {width: 40, 		height:700, offset: [1,1, 2,2, 3,3, 4,4, 5,5, 6,6, 7,7, 8, 7,7, 6,6, 5,5, 4,4, 3,3, 2,2, 1,1]},	},
-			{name: "powerbar.max",			loop: true,		frameData: {width: 40, 		height:700, offset: [8, 9]},			},
+			{name: "player.stand",			loop: false,	frameData: {width: 177, 	height:200, frameIDArray: [0]},				},
+			{name: "player.hit",			loop: false,	frameData: {width: 177, 	height:200, frameIDArray: [4, 5, 6, 7]},		},
+			{name: "player.lanuch",			loop: false,	frameData: {width: 177, 	height:200, frameIDArray: [0, 1, 2, 3]},		},
+			{name: "net.normal",			loop: false,	frameData: {width: 900 , 	height:101, frameIDArray: [0]},				},
+			{name: "poop.normal",			loop: false,	frameData: {width: 71, 		height:58, 	frameIDArray: [0]},				},
+			{name: "powerbar.normal",		loop: false,	frameData: {width: 40, 		height:700, frameIDArray: [0]},				},
+			{name: "powerbar.launch",		loop: false,	frameData: {width: 40, 		height:700, frameIDArray: [1,1, 2,2, 3,3, 4,4, 5,5, 6,6, 7,7, 8, 7,7, 6,6, 5,5, 4,4, 3,3, 2,2, 1,1]},	},
+			{name: "powerbar.max",			loop: true,		frameData: {width: 40, 		height:700, frameIDArray: [8, 9]},			},
 		];
 		function loadAnimation (animationName) {
 			for (i in animationData) {
@@ -97,7 +97,7 @@ Data = {
 						spriteName = actorData[actIdx].sprites;
 
 						sprite = loadSprite(spriteName);
-						assert(sprite != null, "Load spirte " + spriteName + " failed.");			
+						console.assert(sprite != null);			
 					
 						actor.addSprite(sprite);
 					}
@@ -105,7 +105,7 @@ Data = {
 						vgName = actorData[actIdx].vectorGraphic;
 						
 						vectorGraphic = VectorGraphic.createNew(vgName);
-						assert(vectorGraphic != null, "Load vector graphic " + vgName + " failed.");	
+						console.assert(vectorGraphic != null);	
 						
 						actor.addVectorGraphic(vectorGraphic);
 					}
