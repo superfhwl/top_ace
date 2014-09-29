@@ -25,14 +25,14 @@ Game = {
 		/******************** resources ********************/
 		// background is a simple image for now. so loading & drawing the BG is simple.
 		var m_background = null;
-		game.loadBackground = function () {
+		game.loadBackground = function (data) {
 			m_background = data.loadBackground();
 		}
 
 		
 		// actors is defined in data.js
 		var m_actors = null;
-		game.loadActors = function() {
+		game.loadActors = function(data) {
 			m_actors = new Array();
 			m_actors.push(data.loadActor("player"));
 			m_actors.push(data.loadActor("net"));
@@ -103,15 +103,14 @@ Game = {
 	}
 }
 
+game = Game.createNew();
+
 /**
  Define the main function.
 */
 function main() {
 	// Create a data object to use game resource.
-	var data = Data.createNew();
-	
-	// Create and init the game object.
-	var game = Game.createNew();						
+	var data = Data.createNew();	
 	
 	// Turn on the main screen.
 	g_screen.init();
@@ -121,8 +120,8 @@ function main() {
 	game.setInput(g_input);		
 	
 	// load game resources.
-	game.loadBackground();		// load the background resource.
-	game.loadActors();			// load all the actor's resource.
+	game.loadBackground(data);		// load the background resource.
+	game.loadActors(data);			// load all the actor's resource.
 	
 	// start the main loop
 	game.loop();
@@ -132,3 +131,4 @@ function main() {
  Call the main function.
 */
 main();
+

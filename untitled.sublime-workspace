@@ -1,0 +1,403 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "js/Utility.js",
+			"settings":
+			{
+				"buffer_size": 2579,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/Data.js",
+			"settings":
+			{
+				"buffer_size": 6035,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/Sprite.js",
+			"settings":
+			{
+				"buffer_size": 5650,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/Device.js",
+			"settings":
+			{
+				"buffer_size": 4534,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/Actor.js",
+			"settings":
+			{
+				"buffer_size": 8022,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/Game.js",
+			"settings":
+			{
+				"buffer_size": 3374,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 47.0,
+		"selected_items":
+		[
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/William/Documents/MyWorkSpace/top_ace/js/Game.js",
+		"/Users/William/Documents/MyWorkSpace/top_ace/js/Utility.js",
+		"/Users/William/Documents/MyWorkSpace/top_ace/js/Sprite.js",
+		"/Users/William/Documents/MyWorkSpace/top_ace/js/Device.js",
+		"/Users/William/Documents/MyWorkSpace/top_ace/js/Data.js",
+		"/Users/William/Documents/MyWorkSpace/top_ace/js/Actor.js"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"game",
+			"POWER_BAR_MAX_FRAME",
+			" +",
+			"m_y",
+			"m_x"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"m_pos.y",
+			"m_pos.x"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "js/Utility.js",
+					"settings":
+					{
+						"buffer_size": 2579,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2150,
+								2150
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1046.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "js/Data.js",
+					"settings":
+					{
+						"buffer_size": 6035,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4814,
+								4814
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 3.0,
+						"translation.y": 1481.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "js/Sprite.js",
+					"settings":
+					{
+						"buffer_size": 5650,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4597,
+								4597
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2431.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "js/Device.js",
+					"settings":
+					{
+						"buffer_size": 4534,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1760,
+								1760
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 701.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "js/Actor.js",
+					"settings":
+					{
+						"buffer_size": 8022,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7980,
+								7980
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4391.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "js/Game.js",
+					"settings":
+					{
+						"buffer_size": 3374,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2884,
+								2888
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1216.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"ut",
+				"Utility.js"
+			],
+			[
+				"game",
+				"Game.js"
+			],
+			[
+				"u",
+				"Utility.js"
+			],
+			[
+				"actor",
+				"Actor.js"
+			],
+			[
+				"sp",
+				"Sprite.js"
+			],
+			[
+				"",
+				"Actor.js"
+			],
+			[
+				"data",
+				"Data.js"
+			],
+			[
+				"ac",
+				"Actor.js"
+			],
+			[
+				"dv",
+				"Device.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}

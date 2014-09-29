@@ -83,27 +83,35 @@ Actor = {
 		
 		// the coordinate of this Actor. handle the drawing tasks.
 		// This is the left-up point of this actor.
-		var m_x = 0;
-		var m_y = 0;
+		var m_pos = {x: 0, y: 0};
+
 		actor.setPos = function (x, y) {
-			m_x = x;
-			m_y = y;
+			m_pos.x = x;
+			m_pos.y = y;
 		}
-		
+
 		actor.getPos = function () {
-			var point;
-			point.x = m_x;
-			point.y = m_y;
-			return point;
+			return m_pos;
 		}
-		
+
+		// Default pos is defined in the data.js
+		var m_defaultPos = {x: 0, y: 0};	
+
+		actor.setDefaultPos = function (x, y) {
+			m_defaultPos.x = x;
+			m_defaultPos.y = y;
+		}
+
+		actor.getDefualtPos = function () {
+			return m_defaultPos;
+		}
 		
 		// return the center coordinator, it depends on the frame width
 		actor.getCenterPos = function () {
 			var point;
 			
-			point.x = m_x + (m_animations[m_curAnimationId].getFrameWidth() / 2);
-			point.y = m_y + (m_animations[m_curAnimationId].getFrameHeight() / 2);
+			point.x = m_pos.x + (m_animations[m_curAnimationId].getFrameWidth() / 2);
+			point.y = m_pos.y + (m_animations[m_curAnimationId].getFrameHeight() / 2);
 			
 			return point;
 		}
@@ -119,12 +127,12 @@ Actor = {
 			
 			// if have image sprite, draw first
 			if (m_sprite != null) {
-				m_sprite.draw(screen, m_x, m_y, animation);				
+				m_sprite.draw(screen, m_pos.x, m_pos.y, animation);				
 			}
 			
 			// if have vector grapic , draw after sprite.
 			if (m_vectorGraphic != null) {
-				m_vectorGraphic.draw(screen, m_x, m_y, animation);				
+				m_vectorGraphic.draw(screen, m_pos.x, m_pos.y, animation);				
 			}
 		}
 		
@@ -169,6 +177,9 @@ Actor = {
 			case "powerBarFSM":
 				actor.fsm = PowerBarFSM.createNew(actor.name);
 				break;
+
+			case "ballFSM":
+				actor.fsm = BallFSM.createNew(actor.name);
 			}
 		}
 		
@@ -301,13 +312,7 @@ BallFSM = {
 		var STATE_NORMAL 		= 0;
 		var STATE_LANUCHING 	= 1; 
 		var STATE_FLYING  		= 2;
-		var m_state = STATE_NORMAL;
-		
-		var POWER_BAR_MAX_FRAME = 15;
-		
-		var m_ballOriginPos = {};
-		m_ballOriginPos.x = 0;
-		m_ballOriginPos.y = 0;
+		var m_state = STATE_NORMAL;		
 		
 		var m_ballLanuchPosOffset = 0;
 		
@@ -318,28 +323,38 @@ BallFSM = {
 			case STATE_NORMAL:
 				if (input.isAction("press_screen")) {
 					actor.setVisiable(true);
-					
-					var pos = actor.getPos();
-					m_ballOriginPos.x = pos.x;
-					m_ballOriginPos.y = pos.y;
-					
-					m_ballLanuchPosOffset = -3;
-					
+					m_ballLanuchPosOffset = -14;
 					m_state = STATE_LANUCHING;
 				}
 				break;
 			case STATE_LANUCHING:
-				if (EventQueue.findEvent("powerBar", "POWER_BAR_REACH_TOP")) {
+			/*
+				// if powerbar reach the top(and post the event), ball should go down.
+				if (EventQueue.findEvent("powerbar", "POWER_BAR_REACH_TOP")) {
 					m_ballLanuchPosOffset = 3;
 				}
-				m_ballPosOffset.y += m_ballLanuchPosOffset;
+				*/
+
+				pos = actor.getPos();
+				actor.setPos(pos.x, pos.y + m_ballLanuchPosOffset);
+				m_ballLanuchPosOffset += 1;
 				
 				if (input.isAction("press_screen")) {
 					m_state = STATE_FLYING;
 				}
+				break;
 				
 			case STATE_FLYING:
-				
+				if (input.isAction("press_screen")) {
+					// hide the ball
+					actor.setVisiable(false);
+					
+					// set to default place
+					pos = actor.getDefualtPos();
+					actor.setPos(pos.x, pos.y);
+
+					m_state = STATE_NORMAL;
+				}
 				break;
 			}
 		}

@@ -93,7 +93,7 @@ Data = {
 			{name: "net", 			pos: {x: 120,  y: 700},	visiable: true,		graphicType: "image",	sprites: "net",					animations: ["net.normal"]												, AI: null},
 			{name: "poop", 			pos: {x: 260, y: 600},	visiable: true,		graphicType: "image",	sprites: "poop",				animations: ["poop.normal"]												, AI: null},
 			{name: "powerbar", 		pos: {x: 990, y: 500},	visiable: true,		graphicType: "vector",	vectorGraphic: "powerbar",		animations: ["powerbar.normal", "powerbar.launch", "powerbar.max"]	 	, AI: "powerBarFSM"},
-			{name: "ball", 			pos: {x: 630, y: 1000},	visiable: false,	graphicType: "image",	sprites: "ball",				animations: ["ball.normal"]	 											, AI: null},
+			{name: "ball", 			pos: {x: 630, y: 1020},	visiable: false,	graphicType: "image",	sprites: "ball",				animations: ["ball.normal"]	 											, AI: "ballFSM"},
 		];
 		data.loadActor = function (actorName) {
 			for (actIdx in actorData) {
@@ -134,6 +134,7 @@ Data = {
 					
 					// load actor's data itself.
 					actor.setPos(actorData[actIdx].pos.x, actorData[actIdx].pos.y);
+					actor.setDefaultPos(actorData[actIdx].pos.x, actorData[actIdx].pos.y);
 					actor.setVisiable(actorData[actIdx].visiable);
 					
 					// Register actor's AI process functions.

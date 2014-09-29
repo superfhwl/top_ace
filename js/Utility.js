@@ -80,20 +80,21 @@ ActorEventQueue = {
 		// the "this" object, use this to define members & methods.
 		var queue = {};	
 		
-		var m_eventQueue = {};
+		var m_eventQueue = [];
 		var m_curEventIndex = 0;
 
 		// post an event to queue.
-		queue.postEvent = function (event) {
+		queue.postEvent = function (actor, msg) {
+			var event = ActorEvent.createNew(actor, msg);
 			m_eventQueue.push(event);
 		}
 
 		queue.clearAllEvent = function () {
-			m_eventQueue.clear();
+			m_eventQueue.length = 0;
 		}
 
 		// read the event under the cur Index, and goto the next event.
-		queue.readNextEvent() {
+		queue.readNextEvent = function () {
 			if (m_curEventIndex < m_eventQueue.lenght) {
 				event = m_eventQueue[m_curEventIndex];
 				m_curEventIndex++;

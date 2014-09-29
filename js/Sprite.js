@@ -195,8 +195,10 @@ function drawPowerBar(screen, drawRect, frameIndex) {
 	screen.setAlpha(0.8);
 	
 	if (frameIndex <= POWER_BAR_MAX_FRAME) {
-		level = drawRect.y + (((POWER_BAR_MAX_FRAME - frameIndex) / POWER_BAR_MAX_FRAME) * drawRect.height);
-		clipRect = {x: drawRect.x, y: level, width: drawRect.width, height: (drawRect.y + drawRect.height) - level};
+		var level = drawRect.y + (((POWER_BAR_MAX_FRAME - frameIndex) / POWER_BAR_MAX_FRAME) * drawRect.height);
+
+		var clipRect = {x: drawRect.x, y: level, width: drawRect.width, height: (drawRect.y + drawRect.height) - level};
+		
 		screen.fillLinearGradientRectangle(clipRect, drawRect, yellow, red, "vertical_up");
 	}	
 	else if (frameIndex == 20){
