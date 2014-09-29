@@ -186,13 +186,28 @@ Animation = {
  The draw function for powerbar object.
 */
 function drawPowerBar(screen, drawRect, frameIndex) {
-	POWER_BAR_MAX_FRAME = 8;
-	level = drawRect.y + (((POWER_BAR_MAX_FRAME - frameIndex) / POWER_BAR_MAX_FRAME) * drawRect.height);
+	var POWER_BAR_MAX_FRAME = 15;
+	var yellow = '#ffff00';
+	var red = '#ff0000';
+	var darkRed = '#aa0000';
+	var darkWhite = "#d3d3d3";
 	
-	clipRect = {x: drawRect.x, y: level, width: drawRect.width, height: (drawRect.y + drawRect.height) - level};
-	screen.fillLinearGradientRectangle(clipRect, drawRect, 'yellow', 'red', "vertical_up");
+	screen.setAlpha(0.8);
+	
+	if (frameIndex <= POWER_BAR_MAX_FRAME) {
+		level = drawRect.y + (((POWER_BAR_MAX_FRAME - frameIndex) / POWER_BAR_MAX_FRAME) * drawRect.height);
+		clipRect = {x: drawRect.x, y: level, width: drawRect.width, height: (drawRect.y + drawRect.height) - level};
+		screen.fillLinearGradientRectangle(clipRect, drawRect, yellow, red, "vertical_up");
+	}	
+	else if (frameIndex == 20){
+		screen.fillRectangle(drawRect, darkRed);
+	}
+	else if (frameIndex == 21) {
+		screen.fillRectangle(drawRect, red);		
+	}
+	
+	screen.setAlpha(1.0);
 	
 	// draw the border.
-	screen.drawRectangle(drawRect, "#d3d3d3", 0.5);
-
+	screen.drawRectangle(drawRect, darkWhite, 0.8);
 }

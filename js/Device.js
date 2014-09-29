@@ -46,6 +46,11 @@ Screen = {
 			}
 		}
 		
+		// Set alpha
+		screen.setAlpha = function (alphaValue) {
+			m_context.globalAlpha = alphaValue;
+		}
+		
 		// Draw an image on canvas object
 		screen.drawImage = function (img, srcRect, dstRect) {
 			m_context.drawImage(img, srcRect.x, srcRect.y, srcRect.width, srcRect.height, dstRect.x, dstRect.y, dstRect.width, dstRect.height);
@@ -102,6 +107,10 @@ Screen = {
 			m_context.fillRect(fillX, fillY, fillWidth, fillHeight);
 		}
 		
+		screen.fillRectangle = function (dstRect, color) {
+			m_context.fillStyle = color;
+			m_context.fillRect(dstRect.x, dstRect.y, dstRect.width, dstRect.height);
+		}
 		
 		
 		// return the "this" object, so we have all these members & methonds defined above now.

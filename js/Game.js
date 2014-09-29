@@ -37,8 +37,8 @@ Game = {
 			m_actors.push(data.loadActor("player"));
 			m_actors.push(data.loadActor("net"));
 			m_actors.push(data.loadActor("poop"));
-			m_actors.push(data.loadActor("powerbar"));
-			m_actors.push(data.loadActor("powercursor"));			
+			m_actors.push(data.loadActor("powerbar"));	
+			m_actors.push(data.loadActor("ball"));
 		}
 		
 		/******************** graphic process ********************/
@@ -93,6 +93,9 @@ Game = {
 			
 			// flood inputs
 			m_input.clear();
+			
+			// flood events.
+			EventQueue.clearAllEvent();
 		}
 		
 		// return the "this" object, so we have all these members & methonds defined above now.
@@ -105,10 +108,10 @@ Game = {
 */
 function main() {
 	// Create a data object to use game resource.
-	data = Data.createNew();
+	var data = Data.createNew();
 	
 	// Create and init the game object.
-	game = Game.createNew();						
+	var game = Game.createNew();						
 	
 	// Turn on the main screen.
 	g_screen.init();

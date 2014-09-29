@@ -40,3 +40,86 @@ function loginfo(log) {
 		console.info(log);
 	}
 }
+
+function logtrace(log) {
+	if (debugflag == true) {
+		console.trace(log);
+	}
+}
+
+/**
+ An actor can post an event, and another actors would listen to this event.
+*/
+ActorEvent = {
+	// the create method, to genarate an object.
+	createNew : function (actor, msg) {
+		// the "this" object, use this to define members & methods.
+		var event = {};	
+		
+
+		var m_sourceActor = actor;
+		event.getSrcActorName = function () {
+			return m_sourceActor.name;
+		}
+		
+		var m_msg = msg;
+		event.getMsg = function () {
+			return m_msg;
+		}
+		
+		return event;
+	}
+}
+
+/**
+ An actor can post an event, and another actors would listen to this event.
+*/
+ActorEventQueue = {
+	// the create method, to genarate an object.
+	createNew : function () {
+		// the "this" object, use this to define members & methods.
+		var queue = {};	
+		
+		var m_eventQueue = {};
+		var m_curEventIndex = 0;
+
+		// post an event to queue.
+		queue.postEvent = function (event) {
+			m_eventQueue.push(event);
+		}
+
+		queue.clearAllEvent = function () {
+			m_eventQueue.clear();
+		}
+
+		// read the event under the cur Index, and goto the next event.
+		queue.readNextEvent() {
+			if (m_curEventIndex < m_eventQueue.lenght) {
+				event = m_eventQueue[m_curEventIndex];
+				m_curEventIndex++;
+			}
+
+			return event;
+		}
+		
+		// reset the cur Index.
+		queue.gotoFirstEvent = function () {
+			m_curEventIndex = 0;
+		}
+		
+		// If there is a matched event?
+		queue.findEvent = function (actorName, msg) {
+			for (i in m_eventQueue) {
+				if ((m_eventQueue[i].getMsg() == msg) && (m_eventQueue[i].getSrcActorName() == actorName)) {
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		return queue;
+	}
+}
+
+EventQueue = ActorEventQueue.createNew();
