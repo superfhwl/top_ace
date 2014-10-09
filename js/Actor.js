@@ -255,7 +255,7 @@ PowerBarFSM = {
 		var m_state = STATE_NORMAL;
 
 		// max frame control the power animation
-		var POWER_BAR_MAX_FRAME = 15;
+		var POWER_BAR_MAX_FRAME = 10;
 
 		// AI entry method.
 		fsm.play = function (actor, input) {
@@ -316,6 +316,9 @@ BallFSM = {
 		
 		var m_ballLanuchPosOffset = 0;
 		
+		var m_ballStartPos;
+		var m_ballEndPos;
+		var m_ballFlyFrame = 0;
 		
 		// AI entry method.
 		fsm.play = function (actor, input) {
@@ -323,29 +326,29 @@ BallFSM = {
 			case STATE_NORMAL:
 				if (input.isAction("press_screen")) {
 					actor.setVisiable(true);
-					m_ballLanuchPosOffset = -14;
+					m_ballLanuchPosOffset = -20;
 					m_state = STATE_LANUCHING;
 				}
 				break;
-			case STATE_LANUCHING:
-			/*
-				// if powerbar reach the top(and post the event), ball should go down.
-				if (EventQueue.findEvent("powerbar", "POWER_BAR_REACH_TOP")) {
-					m_ballLanuchPosOffset = 3;
-				}
-				*/
 
+			case STATE_LANUCHING:
 				pos = actor.getPos();
 				actor.setPos(pos.x, pos.y + m_ballLanuchPosOffset);
-				m_ballLanuchPosOffset += 1;
+				m_ballLanuchPosOffset += 2;
 				
 				if (input.isAction("press_screen")) {
+  					// set destnation of the ball flying track.
+					m_ballEndPos = game.getActor("poop").getPos();
+					m_ballStartPos = actor.getPos();
+					m_ballFlyFrame = 0;
+
 					m_state = STATE_FLYING;
 				}
 				break;
 				
 			case STATE_FLYING:
-				if (input.isAction("press_screen")) {
+				m_ballFlyFrame++;
+				if (m_ballFlyFrame > 5) {
 					// hide the ball
 					actor.setVisiable(false);
 					
@@ -354,6 +357,14 @@ BallFSM = {
 					actor.setPos(pos.x, pos.y);
 
 					m_state = STATE_NORMAL;
+				}
+				else {
+					x0 = (m_ballEndPos.x - m_ballStartPos.x) * 1.0;
+					y0 = (m_ballEndPos.y - m_ballStartPos.y) * 1.0;
+					dltX = ((m_ballFlyFrame * 1.0) / 5 * x0);
+					dltY = ((m_ballFlyFrame * 1.0) / 5 * y0);
+
+					actor.setPos(m_ballStartPos.x + dltX, m_ballStartPos.y + dltY);
 				}
 				break;
 			}

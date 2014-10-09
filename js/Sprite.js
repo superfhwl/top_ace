@@ -186,7 +186,7 @@ Animation = {
  The draw function for powerbar object.
 */
 function drawPowerBar(screen, drawRect, frameIndex) {
-	var POWER_BAR_MAX_FRAME = 15;
+	var POWER_BAR_MAX_FRAME = 10;
 	var yellow = '#ffff00';
 	var red = '#ff0000';
 	var darkRed = '#aa0000';
@@ -198,7 +198,7 @@ function drawPowerBar(screen, drawRect, frameIndex) {
 		var level = drawRect.y + (((POWER_BAR_MAX_FRAME - frameIndex) / POWER_BAR_MAX_FRAME) * drawRect.height);
 
 		var clipRect = {x: drawRect.x, y: level, width: drawRect.width, height: (drawRect.y + drawRect.height) - level};
-		
+
 		screen.fillLinearGradientRectangle(clipRect, drawRect, yellow, red, "vertical_up");
 	}	
 	else if (frameIndex == 20){

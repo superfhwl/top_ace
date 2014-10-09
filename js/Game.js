@@ -40,6 +40,14 @@ Game = {
 			m_actors.push(data.loadActor("powerbar"));	
 			m_actors.push(data.loadActor("ball"));
 		}
+
+		game.getActor = function (name) {
+			for (i in m_actors) {
+				if (name == m_actors[i].name) {
+					return m_actors[i];
+				}
+			}
+		}
 		
 		/******************** graphic process ********************/
 		// class Game control the drawing task, so it owned a screen object.
