@@ -56,6 +56,13 @@ ActorEvent = {
 		// the "this" object, use this to define members & methods.
 		var event = {};	
 		
+		var m_stamp = "INIT";
+		event.setStamp = function (stamp) {
+			m_stamp = stamp;
+		}
+		event.getStamp = function () {
+			return m_stamp;
+		}
 
 		var m_sourceActor = actor;
 		event.getSrcActorName = function () {
@@ -89,8 +96,26 @@ ActorEventQueue = {
 			m_eventQueue.push(event);
 		}
 
-		queue.clearAllEvent = function () {
-			m_eventQueue.length = 0;
+		queue.removeEvent = function (event) {
+			for (i in m_eventQueue) {
+				if (m_eventQueue[i] == event) {
+					m_eventQueue.splice(i, 1);   // remove the matched element
+				}
+			}
+		}
+
+		queue.updateAllEvent = function () {
+			for (i in m_eventQueue) {
+				if (m_eventQueue[i].getStamp() == "INIT") {
+					m_eventQueue[i].setStamp("POSTED");   	// first frame, it can't be read by other actors.
+				}
+				else if (m_eventQueue[i].getStamp() == "POSTED") {
+					m_eventQueue[i].setStamp("NEEDREMOVE");   // now it's readable.
+				}
+				else {
+					m_eventQueue.splice(i, 1);   // remove the out-of-date event
+				}
+			}
 		}
 
 		// read the event under the cur Index, and goto the next event.
@@ -111,8 +136,10 @@ ActorEventQueue = {
 		// If there is a matched event?
 		queue.findEvent = function (actorName, msg) {
 			for (i in m_eventQueue) {
-				if ((m_eventQueue[i].getMsg() == msg) && (m_eventQueue[i].getSrcActorName() == actorName)) {
-					return true;
+				if (m_eventQueue[i].getStamp() == "POSTED") {
+					if ((m_eventQueue[i].getMsg() == msg) && (m_eventQueue[i].getSrcActorName() == actorName)) {
+						return true;
+					}
 				}
 			}
 			

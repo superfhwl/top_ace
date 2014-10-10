@@ -224,7 +224,7 @@ PlayerFSM = {
 				break;
 
 			case STATE_HITTING:
-				if (input.isAction("press_screen")) {
+				if (EventQueue.findEvent("ball", "BALL_HIT_TARGET")) {
 					actor.setAnimation("player.stand", false);
 					m_state = STATE_STANDING;
 				}
@@ -284,7 +284,7 @@ PowerBarFSM = {
 				break;
 
 			case STATE_HITTING:
-				if (input.isAction("press_screen")) {
+				if (EventQueue.findEvent("ball", "BALL_HIT_TARGET")) {
 					actor.setAnimation("powerbar.normal", false);
 					m_state = STATE_NORMAL;
 				}
@@ -348,7 +348,11 @@ BallFSM = {
 				
 			case STATE_FLYING:
 				m_ballFlyFrame++;
-				if (m_ballFlyFrame > 5) {
+				var BALL_FLY_FRAME_COUNT = 10;
+				if (m_ballFlyFrame > BALL_FLY_FRAME_COUNT ) {
+					// post an event to other actors.
+					EventQueue.postEvent(actor, "BALL_HIT_TARGET");
+
 					// hide the ball
 					actor.setVisiable(false);
 					
@@ -361,8 +365,8 @@ BallFSM = {
 				else {
 					x0 = (m_ballEndPos.x - m_ballStartPos.x) * 1.0;
 					y0 = (m_ballEndPos.y - m_ballStartPos.y) * 1.0;
-					dltX = ((m_ballFlyFrame * 1.0) / 5 * x0);
-					dltY = ((m_ballFlyFrame * 1.0) / 5 * y0);
+					dltX = ((m_ballFlyFrame * 1.0) / BALL_FLY_FRAME_COUNT * x0);
+					dltY = ((m_ballFlyFrame * 1.0) / BALL_FLY_FRAME_COUNT * y0);
 
 					actor.setPos(m_ballStartPos.x + dltX, m_ballStartPos.y + dltY);
 				}

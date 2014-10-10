@@ -103,7 +103,7 @@ Game = {
 			m_input.clear();
 			
 			// flood events.
-			EventQueue.clearAllEvent();
+			EventQueue.updateAllEvent();
 		}
 		
 		// return the "this" object, so we have all these members & methonds defined above now.
